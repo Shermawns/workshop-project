@@ -1,10 +1,8 @@
 package com.Shermawn.demo.services;
-
 import com.Shermawn.demo.models.UserModel;
 import com.Shermawn.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
