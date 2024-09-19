@@ -1,13 +1,7 @@
 package com.Shermawn.demo.config;
 import com.Shermawn.demo.enums.OrderStatus;
-import com.Shermawn.demo.models.CategoryModel;
-import com.Shermawn.demo.models.OrderModel;
-import com.Shermawn.demo.models.ProductModel;
-import com.Shermawn.demo.models.UserModel;
-import com.Shermawn.demo.repository.CategoryRepository;
-import com.Shermawn.demo.repository.OrderRepository;
-import com.Shermawn.demo.repository.ProductRepository;
-import com.Shermawn.demo.repository.UserRepository;
+import com.Shermawn.demo.models.*;
+import com.Shermawn.demo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -52,16 +49,24 @@ public class TestConfig implements CommandLineRunner {
             ProductModel p4 = new ProductModel(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
             ProductModel p5 = new ProductModel(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 
-            p1.setCategories(cat2);
-            p2.setCategories(cat1);
-            p3.setCategories(cat3);
-            p4.setCategories(cat3);
-            p5.setCategories(cat2);
-
             userRepository.saveAll(Arrays.asList(u1,u2));
             orderRepository.saveAll(Arrays.asList(o1,o2,o3));
             categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
             productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
 
+            p1.getCategories().add(cat2);
+            p2.getCategories().add(cat1);
+            p3.getCategories().add(cat3);
+            p4.getCategories().add(cat3);
+            p5.getCategories().add(cat2);
+
+            productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+            OrderItemModel oi1 = new OrderItemModel(o1, p1, 2, p1.getPrice());
+            OrderItemModel oi2 = new OrderItemModel(o1, p3, 1, p3.getPrice());
+            OrderItemModel oi3 = new OrderItemModel(o2, p3, 2, p3.getPrice());
+            OrderItemModel oi4 = new OrderItemModel(o3, p5, 2, p5.getPrice());
+
+            orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
     }
 }

@@ -1,17 +1,11 @@
 package com.Shermawn.demo.models;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "TB_CATEGORY")
@@ -23,12 +17,32 @@ public class CategoryModel implements Serializable {
     private Long id;
     private String name;
 
+    @ManyToMany(mappedBy = "categories")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private List<ProductModel> products = new ArrayList<>();
+
     public CategoryModel(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "categories")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<ProductModel> products = new ArrayList<>();
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<ProductModel> getProducts() {
+        return products;
+    }
 }

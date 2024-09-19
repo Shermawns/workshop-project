@@ -1,15 +1,10 @@
 package com.Shermawn.demo.models;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "TB_PRODUCT")
@@ -23,10 +18,13 @@ public class ProductModel implements Serializable {
     private String description;
     private double price;
     private String imgUrl;
+    @ManyToMany
+    @JoinTable(
+            name = "TB_PRODUCT_CATEGORY",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<CategoryModel> categories = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "product_category")
-    private CategoryModel categories;
 
 
     public ProductModel(Long id, String name, String description, double price, String imgUrl) {
@@ -35,5 +33,49 @@ public class ProductModel implements Serializable {
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
+    public List<CategoryModel> getCategories() {
+        return categories;
     }
 }

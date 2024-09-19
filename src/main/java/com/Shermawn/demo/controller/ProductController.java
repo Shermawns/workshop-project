@@ -1,8 +1,6 @@
 package com.Shermawn.demo.controller;
 import com.Shermawn.demo.models.ProductModel;
-import com.Shermawn.demo.models.UserModel;
 import com.Shermawn.demo.services.ProductService;
-import com.Shermawn.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

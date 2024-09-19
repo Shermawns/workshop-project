@@ -1,14 +1,13 @@
 package com.Shermawn.demo.models;
 import com.Shermawn.demo.enums.OrderStatus;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
-
-
 @Entity
 @Table(name = "TB_ORDER")
 public class OrderModel implements Serializable {
@@ -21,8 +20,11 @@ public class OrderModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-
     private UserModel client;
+
+    @OneToMany(mappedBy = "id.orderModel")
+    private Set<OrderItemModel> items = new HashSet<>();
+
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
@@ -55,6 +57,10 @@ public class OrderModel implements Serializable {
 
     public void setClient(UserModel client) {
         this.client = client;
+    }
+
+    public Set<OrderItemModel> getItems() {
+        return items;
     }
 
     public OrderStatus getOrderStatus() {
