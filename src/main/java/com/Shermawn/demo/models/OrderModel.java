@@ -31,12 +31,13 @@ public class OrderModel implements Serializable {
     // A lista de itens é armazenada em um Set para garantir que não haja duplicatas.
     @OneToMany(mappedBy = "id.orderModel")
     private Set<OrderItemModel> orders = new HashSet<>();
+    @OneToOne(mappedBy = "orderModel", cascade = CascadeType.ALL)
+    private PaymentModel paymentModel;
 
 
     // Ao invés de aparecer números no banco de dados, aparece a String do orderStatus
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-
 
     public OrderModel(Long id, Instant moment, UserModel client, OrderStatus orderStatus) {
         this.id = id;
@@ -86,4 +87,13 @@ public class OrderModel implements Serializable {
         this.orderStatus = OrderStatus.valueOf(orderStatus.getCode());
         }
     }
+
+    public PaymentModel getPaymentModel() {
+        return paymentModel;
+    }
+
+    public void setPaymentModel(PaymentModel paymentModel) {
+        this.paymentModel = paymentModel;
+    }
 }
+
