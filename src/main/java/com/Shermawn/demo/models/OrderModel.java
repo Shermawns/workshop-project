@@ -30,7 +30,7 @@ public class OrderModel implements Serializable {
     // O "mappedBy = 'id.orderModel'" indica que o mapeamento está sendo feito com base no campo orderModel dentro da chave composta 'id'.
     // A lista de itens é armazenada em um Set para garantir que não haja duplicatas.
     @OneToMany(mappedBy = "id.orderModel")
-    private Set<OrderItemModel> orders = new HashSet<>();
+    private Set<OrderItemModel> items = new HashSet<>();
     @OneToOne(mappedBy = "orderModel", cascade = CascadeType.ALL)
     private PaymentModel paymentModel;
 
@@ -44,6 +44,14 @@ public class OrderModel implements Serializable {
         this.moment = moment;
         this.client = client;
         setOrderStatus(orderStatus); // --> Aplicar no constructor o orderStatus do pedido
+    }
+
+    public double getTotal(){
+        double sum = 0.0;
+        for (OrderItemModel x : items){
+            sum += x.getSubTotal();
+        }
+        return sum;
     }
 
     public Long getId() {
@@ -71,7 +79,7 @@ public class OrderModel implements Serializable {
     }
 
     public Set<OrderItemModel> getItems() {
-        return orders;
+        return items;
     }
 
 

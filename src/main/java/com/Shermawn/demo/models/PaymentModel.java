@@ -1,5 +1,6 @@
 package com.Shermawn.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class PaymentModel {
     private Long id;
     private Instant moment;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "payment_id")
     private OrderModel orderModel;
