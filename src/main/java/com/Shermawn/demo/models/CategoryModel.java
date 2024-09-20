@@ -10,16 +10,19 @@ import java.util.List;
 @Entity
 @Table(name = "TB_CATEGORY")
 public class CategoryModel implements Serializable {
+
     private static final long serialversionUID = 1L;
 
+    ///Entitys from JPA
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private List<ProductModel> products = new ArrayList<>();
+    ///relation with many categories for many products
+    @ManyToMany(mappedBy = "categories") // --> Mapeamento feito em products
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // --> Não criar um loop infinito
+    private List<ProductModel> products = new ArrayList<>(); // --> Lista de produtos com categoria
 
     public CategoryModel(Long id, String name) {
         this.id = id;

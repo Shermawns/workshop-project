@@ -1,9 +1,12 @@
 package com.Shermawn.demo.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @Entity
@@ -18,6 +21,9 @@ public class ProductModel implements Serializable {
     private String description;
     private double price;
     private String imgUrl;
+
+    //Cria a coluna productCategory, em seguida cria uma coluna productId e categoryId.
+    // No final, armazena tudo em uma lista de categories
     @ManyToMany
     @JoinTable(
             name = "TB_PRODUCT_CATEGORY",
@@ -25,7 +31,8 @@ public class ProductModel implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<CategoryModel> categories = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "id.productModel") // --> Declarar a coleção de itens na classe product
+    private Set<OrderItemModel> items = new HashSet<>();
 
     public ProductModel(Long id, String name, String description, double price, String imgUrl) {
         this.id = id;
@@ -77,5 +84,14 @@ public class ProductModel implements Serializable {
 
     public List<CategoryModel> getCategories() {
         return categories;
+    }
+
+    @JsonIgnore
+    public Set<OrderModel> getItems() {
+        Set<OrderModel> set = new HashSet<>();
+        for (OrderItemModel x : items){
+            set.add(x.getOrderModel());
+        }
+        return set;
     }
 }

@@ -12,12 +12,13 @@ public class OrderItemModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EmbeddedId
-    private OrderItemPK id = new OrderItemPK();
+    private OrderItemPK id = new OrderItemPK(); // --> Instanciar a chave composta que vai conectar products com order
     private int quantity;
     private double price;
 
 
 
+    //Construtor com Order e Product, porém com id no começo pois é pra associar com a chave composta OrderItemPk
     public OrderItemModel(OrderModel orderModel, ProductModel productModel, int quantity, double price) {
         id.setOrderModel(orderModel);
         id.setProductModel(productModel);
@@ -41,16 +42,14 @@ public class OrderItemModel implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore// -->Evita que o método seja considerado na serialização/deserialização JSON
     public OrderModel getOrderModel() {
         return id.getOrderModel();
     }
 
-
-    @JsonIgnore
     public void setOrderModel(OrderModel orderModel) {
         id.setOrderModel(orderModel);
     }
-
     public ProductModel getProductModel() {
         return id.getProductModel();
     }
