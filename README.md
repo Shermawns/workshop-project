@@ -38,15 +38,11 @@ git clone https://github.com/Shermawns/workshop-project
 
 Configure o banco de dados PostgreSQL no arquivo application.properties:
 
-properties
-
 spring.datasource.url=jdbc:postgresql://localhost:5432/workshop
 spring.datasource.username=seu-usuario
 spring.datasource.password=sua-senha
 
 Execute o projeto com o Maven:
-
-bash
 
 mvn spring-boot:run
 
